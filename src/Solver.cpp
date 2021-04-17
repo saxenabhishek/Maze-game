@@ -56,9 +56,9 @@ vector<pair<int, int>> findconnection(vector<vector<int>> maze, int i, int j)
     return connections;
 }
 
-vector<node> mazegraph(vector<vector<int>> mazeAs2dArray)
+map<pair<int, int>, node> makeMazeGraph(vector<vector<int>> mazeAs2dArray)
 {
-    vector<node> mazeg;
+    map<pair<int, int>, node> mazeg;
     for (int i = 0; i < mazeAs2dArray.size(); i++)
     {
         for (int j = 0; j < mazeAs2dArray[i].size(); j++)
@@ -66,11 +66,10 @@ vector<node> mazegraph(vector<vector<int>> mazeAs2dArray)
             if (mazeAs2dArray[i][j] == 1)
                 continue;
             node temp;
-            temp.loc = make_pair(i, j);
             temp.last = make_pair(-1, -1);
             temp.cost = -1;
             temp.connections = findconnection(mazeAs2dArray, i, j);
-            mazeg.push_back(temp);
+            mazeg.insert(make_pair(make_pair(i, j), temp));
         }
     }
     return mazeg;
@@ -89,8 +88,8 @@ int main(int arg, char **argv)
     int COL = mazeAs2dArray[0].size();
     showmaze2d(mazeAs2dArray);
 
-    vector<node> mazeg = mazegraph(mazeAs2dArray);
-    showmazeg(mazeg);
+    auto mazeAsGraph = makeMazeGraph(mazeAs2dArray);
+    showmazeg(mazeAsGraph);
 
     pair<int, int> source(0, 0);
     pair<int, int> destination(ROW - 1, COL - 1);
