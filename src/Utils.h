@@ -47,12 +47,12 @@ void showmaze2d(vector<vector<int>> maze)
     }
 }
 
-void showmazeg(vector<node> mazeg)
+void showmazeg(map<pair<int, int>, node> mazeg)
 {
-    for (int i = 0; i < mazeg.size(); i++)
+    for (auto i = mazeg.begin(); i != mazeg.end(); i++)
     {
-        node localnode = mazeg[i];
-        cout << localnode.loc.first << "," << localnode.loc.second;
+        node localnode = i->second;
+        cout << i->first.first << "," << i->first.second;
         for (int k = 0; k < localnode.connections.size(); k++)
         {
             cout << " ->" << localnode.connections[k].first << "," << localnode.connections[k].second;
@@ -60,4 +60,3 @@ void showmazeg(vector<node> mazeg)
         cout << endl;
     }
 }
-
