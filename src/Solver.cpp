@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <limits>
 #include "Utils.h"
 
 using namespace std;
@@ -67,7 +68,7 @@ map<pair<int, int>, node> makeMazeGraph(vector<vector<int>> mazeAs2dArray)
                 continue;
             node temp;
             temp.last = make_pair(-1, -1);
-            temp.cost = -1;
+            temp.cost = numeric_limits<int>::max();
             temp.connections = findconnection(mazeAs2dArray, i, j);
             mazeg.insert(make_pair(make_pair(i, j), temp));
         }
@@ -75,7 +76,7 @@ map<pair<int, int>, node> makeMazeGraph(vector<vector<int>> mazeAs2dArray)
     return mazeg;
 }
 
-vector<pair<int, int>> Dijkstras_algorithm(map<pair<int, int>, node> maze, pair<int, int> S, pair<int, int> D)
+vector<pair<int, int>> Dijkstras_algorithm(map<pair<int, int>, node> &maze, pair<int, int> S, pair<int, int> D)
 {
     vector<pair<int, int>> Q, done, path;
     maze[S].cost = 0;
