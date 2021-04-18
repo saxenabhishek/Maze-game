@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include <vector>
 
 using namespace std;
@@ -57,6 +57,45 @@ void showmazeg(map<pair<int, int>, node> mazeg)
         {
             cout << " ->" << localnode.connections[k].first << "," << localnode.connections[k].second;
         }
+        cout << endl;
+    }
+}
+
+void showpath(vector<pair<int, int>> path)
+{
+    for (auto it = path.begin(); it != path.end(); ++it)
+        cout << it->first << " " << it->second << endl;
+}
+
+void showmazeandpath(vector<pair<int, int>> path, vector<vector<int>> maze)
+{
+    for (int i = 0; i < maze.size(); i++)
+    {
+        for (int j = 0; j < maze[i].size(); j++)
+        {
+
+            pair<int, int> temp(i, j);
+            if (find(path.begin(), path.end(), temp) != path.end())
+                cout << "+"
+                     << " ";
+            else
+                cout << maze[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+}
+
+void showmazeandcost(map<pair<int, int>, node> MazeGraph, vector<vector<int>> mazeArray)
+{
+    for (int i = 0; i < mazeArray.size(); i++)
+    {
+        for (int j = 0; j < mazeArray[i].size(); j++)
+        {
+            pair<int, int> temp(i, j);
+            cout << MazeGraph[temp].cost << "  ";
+        }
+
         cout << endl;
     }
 }

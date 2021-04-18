@@ -104,7 +104,7 @@ vector<pair<int, int>> Dijkstras_algorithm(map<pair<int, int>, node> maze, pair<
             else
                 Q.push_back(*it);
             int alt_cost = maze[u].cost + 1;
-            cout<<alt_cost<<endl;
+
             if (alt_cost < maze[*it].cost)
             {
                 maze[*it].cost = alt_cost;
@@ -143,7 +143,8 @@ int main(int arg, char **argv)
 
     auto path = Dijkstras_algorithm(mazeAsGraph, source, destination);
     showmazeandpath(path, mazeAs2dArray);
-
+    cout << mazeAsGraph[destination].cost << endl;
+    showmazeandcost(mazeAsGraph, mazeAs2dArray);
     cout << "-----------------------------" << endl;
     return 0;
 }
