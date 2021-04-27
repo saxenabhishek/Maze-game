@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 #include <map>
+#include <limits>
 #include "Utils.h"
 
 using namespace std;
@@ -67,12 +68,59 @@ map<pair<int, int>, node> makeMazeGraph(vector<vector<int>> mazeAs2dArray)
                 continue;
             node temp;
             temp.last = make_pair(-1, -1);
-            temp.cost = -1;
+            temp.cost = numeric_limits<int>::max();
             temp.connections = findconnection(mazeAs2dArray, i, j);
             mazeg.insert(make_pair(make_pair(i, j), temp));
         }
     }
     return mazeg;
+}
+
+vector<pair<int, int>> Dijkstras_algorithm(map<pair<int, int>, node> &maze, pair<int, int> S, pair<int, int> D)
+{
+    vector<pair<int, int>> Q, done, path;
+    maze[S].cost = 0;
+    Q.push_back(S);
+    while (Q.size() > 0)
+    {
+        pair<int, int> u = *Q.begin();
+        vector<pair<int, int>>::iterator del_pointer = Q.begin();
+        for (auto it = Q.begin(); it != Q.end(); ++it)
+        {
+            if (maze[u].cost > maze[*it].cost)
+            {
+                cout << "in" << endl;
+                u = *it;
+                del_pointer = it;
+            }
+        }
+        done.push_back(u);
+        Q.erase(del_pointer);
+
+        auto neighbors = maze[u].connections;
+        for (auto it = neighbors.begin(); it != neighbors.end(); ++it)
+        {
+            if (find(done.begin(), done.end(), *it) != done.end())
+                continue;
+            else
+                Q.push_back(*it);
+            int alt_cost = maze[u].cost + 1;
+
+            if (alt_cost < maze[*it].cost)
+            {
+                maze[*it].cost = alt_cost;
+                maze[*it].last = u;
+            }
+        }
+    }
+    auto x = maze[D];
+    path.push_back(D);
+    do
+    {
+        path.push_back(x.last);
+        x = maze[x.last];
+    } while (x.last != S);
+    return path;
 }
 
 int main(int arg, char **argv)
@@ -89,11 +137,15 @@ int main(int arg, char **argv)
     showmaze2d(mazeAs2dArray);
 
     auto mazeAsGraph = makeMazeGraph(mazeAs2dArray);
-    showmazeg(mazeAsGraph);
-
+    // showmazeg(mazeAsGraph);
+    cout << "-----------------------------" << endl;
     pair<int, int> source(0, 0);
     pair<int, int> destination(ROW - 1, COL - 1);
 
-    // vector<pair<int, int>> path =
+    auto path = Dijkstras_algorithm(mazeAsGraph, source, destination);
+    showmazeandpath(path, mazeAs2dArray);
+    cout << mazeAsGraph[destination].cost << endl;
+    showmazeandcost(mazeAsGraph, mazeAs2dArray);
+    cout << "-----------------------------" << endl;
     return 0;
 }
