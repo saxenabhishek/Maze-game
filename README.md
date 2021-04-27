@@ -1,13 +1,36 @@
-# Maze-game
+# Maze Solver
 
-Maze game is a well-known problem, where we are given a grid of 0’s and 1’s, 0’s corresponds to a place that can be traversed, and 1 corresponds to a place that cannot be traversed (i.e. a wall or barrier); the problem is to find a path from bottom left corner of grid to top right corner; immediate right, immediate left, immediate up and immediate down only are possible (no diagonal moves). We consider a variant of the maze problem where a cost (positive value) or profit (negative value) is attached to visiting each location in the maze, and the problem is to find a path of least cost through the maze.
+## Question
 
-You may solve the problem after imposing/relaxing other restrictions on the above problem on
-* Values of cost/profit (but not same cost/profit for all traversable cells in the grid)
-* Moves possible (but you cannot trivialize the problem by making the grid linear or partly linear in any way)
-* No. of destinations possible
+we are given a grid of 0’s and 1’s, 0’s corresponds to a place that can be traversed, and 1 corresponds to a place that cannot be traversed (i.e. a wall or barrier); the problem is to find a path from bottom left corner of grid to top right corner; immediate right, immediate left, immediate up and immediate down only are possible (no diagonal moves). The problem is to find a path of least cost through the maze.
 
-Choose the most efficient algorithm possible for your specific case.
+## Our Solution
 
+We made a small program first that generates problems for the question. Then we worked on using the Dijkstra algorithm to find the most efficient path in the maze.
 
-Hints: Convert the maze to a weighted graph G (V, E). Each location (i, j) in the maze corresponds to a node in the graph. The problem can have multiple solutions. Students can use any design technique such as greedy method, backtracking, dynamic programming. Students can choose their own conditions, positive or negative costs for the graph. 
+## How to use:
+
+1. Compile the programs in a C++ compiler. The project used MinGW, but it can be compiled with any other compiler.
+2. To generate a question, run the problenGen.exe file and pass two integer arguments to it. This will create a file with the question in it. The spaces which can be walked on are given by ‘-’ and the blocked paths are provided by ‘O’
+4. Then call the Solver file and pass the location of the problem text in it. This file will print the question in integer form and then print the solved version.
+
+**Note:** In the solved version, the path is represented by ‘+’ symbols, from the top left to the bottom right.
+
+## Example use
+
+```shell
+> /path/to/ProblemGen.exe 4 4 ; cat ./problem/question.txt
+> /path/to/Solver.exe './problem/question.txt'
+```
+
+```
+0 0 1 0
+0 0 0 1
+0 0 1 0
+1 0 0 0
+--------
+0 0 1 0
++ 0 0 1
++ + 1 0
+1 + + +
+```
