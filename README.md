@@ -19,11 +19,16 @@ We made a small program first that generates problems for the question. Then we 
 ## Example use
 
 ```shell
-> ./path/to/ProblemGen.exe 4 4 ; cat ./problem/question.txt
-> ./path/to/Solver.exe './problem/question.txt'
+> /path/to/ProblemGen.exe 4 4 ; cat ./problem/question.txt
+> /path/to/Solver.exe './problem/question.txt'
 ```
 
 ```
+0 0 1 0
+0 0 0 1
+0 0 1 0
+1 0 0 0
+--------
 0 0 1 0
 + 0 0 1
 + + 1 0
